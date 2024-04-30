@@ -1,12 +1,12 @@
 #ifndef CommandReceiver_h
 #define CommandReceiver_h
 
-struct Command;
+#include <ControlMessage.h>
 
 class CommandReceiver {
 public:
-	virtual bool hasMessage() = 0;
-	virtual Command getNextMessage() = 0;
+  bool hasMessage() { return {}; };
+  Command getNextMessage() { return {}; };
 };
 
 #endif // !CommandReceiver_h
