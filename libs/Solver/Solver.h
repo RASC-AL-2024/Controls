@@ -15,7 +15,6 @@ class Plan;
 struct Command;
 
 class Solver {
-public:
   HardwareSerial* serial;
 
   Fabrik2D fabrik2D;

@@ -1,9 +1,11 @@
 #include <Solver.h>
 #include <UserInterface.h>
 #include <ControlMessage.h>
-
+#include <Controller.h>
+ 
 Solver solver{&Serial};
 UserInterface user_interface{&Serial};
+Controller controller{Serial};
 
 void setup() {
   Serial.begin(9600);
@@ -11,14 +13,9 @@ void setup() {
   solver.begin();
 }
 
-double state[N_JOINTS] = {0.0, 1.0, 2.0, 3.0};
-
 void loop() {
-  solver.servo_controller->executeServoAbs(state);
-  delay(5000);
-  // if (user_interface.hasMessage()) {
-  //     Command next_message = user_interface.getNextMessage();
-  //     solver->servo_controller->executeServoAbs(state);
-  //     solver.execute(next_message);
-  // }
+  if (user_interface.hasMessage()) {
+    Command next_message = user_interface.getNextMessage();
+    solver.execute(next_message);
+  }
 }
