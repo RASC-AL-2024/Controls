@@ -8,7 +8,7 @@ UserInterface user_interface{&Serial};
 Controller controller{Serial};
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(9600, SERIAL_8N2);
   user_interface.begin();
   solver.begin();
 }

@@ -19,11 +19,17 @@ bool SimServoController::executeAction(const int action) { return true; }
 
 bool SimServoController::executeServoAbs(const double servo_state[]) {
   SetServoMessage message{N_JOINTS, {}};
-  for (int i = 0; i < N_JOINTS; ++i)
-    message.servo_state[i] = servo_state[i];
-
-  serial->write(reinterpret_cast<uint8_t*>(&message), sizeof(message));
   serial->flush();
+  serial->print("servo");
+  for (int i = 0; i < N_JOINTS; ++i) {
+    serial->print(' ');
+    serial->print(servo_state[i]);
+  }
+  serial->println("");
+  serial->flush();
+
+  // serial->write(reinterpret_cast<uint8_t*>(&message), sizeof(message));
+  // serial->flush();
 }
 
 bool SimServoController::executeServoDelta(const double servo_delta[]) {

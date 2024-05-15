@@ -144,25 +144,33 @@ bool Solver::getPlan(const Command& command, Plan& plan) {
   return err_code;
 }
 
+// Coordinate system is RUF
 void Solver::getServoState(const PositionCommand& position, ServoState state) {
+  float baseAngle = atan2(-position.pos[0], position.pos[2]);
+
+  // Now fabrik +x is transformed.z, +y is transformed.y
+  Point transformed = Matrix::fromEulerAngles(0, baseAngle, 0) * position.pos;
+  serial->print("HERE ");
+  serial->print(' ');
+  serial->print(transformed[0]);
+  serial->print(' ');
+  serial->print(transformed[1]);
+  serial->print(' ');
+  serial->println(transformed[2]);
+
 #ifdef DEBUG
   serial->print(position.pos[0]);
   serial->print(" ");
   serial->println(position.pos[1]);
 #endif
-  fabrik2D.solve(position.pos[0], position.pos[1], JOINT_LENGTHS);
-  state[0] = 0;
-#ifdef DEBUG
-  serial->print("fabrik: ");
-#endif
+  fabrik2D.solve(transformed[2], transformed[1], JOINT_LENGTHS);
+  state[0] = baseAngle;
   for (int i = 0; i < 3; i++) {
     state[i + 1] = fabrik2D.getAngle(i); // these are in radians by default
-#ifdef DEBUG
-    serial->print(i);
-    serial->print(":");
-    serial->print(fabrik2D.getAngle(i + 1));
-    serial->print(",");
-#endif
+
+    serial->println(fabrik2D.getAngle(i));
+    serial->println(fabrik2D.getX(i + 1));
+    serial->println(fabrik2D.getY(i + 1));
   }
 }
 
