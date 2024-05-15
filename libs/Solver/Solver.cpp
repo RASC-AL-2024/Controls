@@ -150,13 +150,6 @@ void Solver::getServoState(const PositionCommand& position, ServoState state) {
 
   // Now fabrik +x is transformed.z, +y is transformed.y
   Point transformed = Matrix::fromEulerAngles(0, baseAngle, 0) * position.pos;
-  serial->print("HERE ");
-  serial->print(' ');
-  serial->print(transformed[0]);
-  serial->print(' ');
-  serial->print(transformed[1]);
-  serial->print(' ');
-  serial->println(transformed[2]);
 
 #ifdef DEBUG
   serial->print(position.pos[0]);
@@ -167,10 +160,6 @@ void Solver::getServoState(const PositionCommand& position, ServoState state) {
   state[0] = baseAngle;
   for (int i = 0; i < 3; i++) {
     state[i + 1] = fabrik2D.getAngle(i); // these are in radians by default
-
-    serial->println(fabrik2D.getAngle(i));
-    serial->println(fabrik2D.getX(i + 1));
-    serial->println(fabrik2D.getY(i + 1));
   }
 }
 
