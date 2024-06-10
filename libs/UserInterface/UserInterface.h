@@ -4,7 +4,7 @@
 #include <CommandReceiver.h>
 #include <ControlMessage.h>
 
-#define MAX_CHARS 64
+#define MAX_CHARS 512
 class UserInterface : CommandReceiver {
 
   HardwareSerial* serial;

@@ -98,8 +98,20 @@ Command UserInterface::parseServoCommand(char* command_string) const {
 }
 
 Command UserInterface::parsePositionCommand(char* command_string) const {
-  double position[N_DIMENSIONS];
-  splitLineToFloatArray(command_string, &position[0], N_DIMENSIONS);
+  double position[3];
+  splitLineToFloatArray(command_string, &position[0], 3);
+  // double m[4][4];
+  // splitLineToFloatArray(command_string, &m[0][0], 16);
+  // Pose pose{Matrix{{
+  //               {m[0][0], m[0][1], m[0][2]},
+  //               {m[1][0], m[1][1], m[1][2]},
+  //               {m[2][0], m[2][1], m[2][2]},
+  //           }},
+  //           Point{
+  //               m[0][0],
+  //               m[0][1],
+  //               m[0][2],
+  //           }};
   struct Point point {
     position[0], position[1], position[2]
   };

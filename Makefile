@@ -6,7 +6,7 @@ build:
 	arduino-cli compile -b arduino:avr:mega --libraries libs --build-path ./build
 
 upload:
-	arduino-cli upload -p /dev/cu.usbmodem14301 --fqbn arduino:avr:mega --input-dir ./build
+	arduino-cli upload -p /dev/cu.usbmodem14201 --fqbn arduino:avr:mega --input-dir ./build
 
 listen:
-	cat /dev/cu.usbmodem14301
+	cat /dev/cu.usbmodem14201
